@@ -1,0 +1,16 @@
+/* src/components/OrderStatus.css */
+.cooking-animation {
+  animation: pulse 1.5s infinite;
+  font-size: 18px;
+  color: #ff6600;
+}
+.ready-alert {
+  font-size: 18px;
+  color: green;
+  font-weight: bold;
+}
+@keyframes pulse {
+  0% { opacity: 0.3; }
+  50% { opacity: 1; }
+  100% { opacity: 0.3; }
+}
