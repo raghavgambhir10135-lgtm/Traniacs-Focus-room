@@ -1,70 +1,211 @@
-# Getting Started with Create React App
+# FocusHub Backend API
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Node.js + Express + MongoDB Atlas backend for the FocusHub app.
 
-## Available Scripts
+## Setup
 
-In the project directory, you can run:
+### 1. Install dependencies
+```bash
+npm install
+```
 
-### `npm start`
+### 2. Configure environment variables
+Copy `.env.example` to `.env` and fill in your values:
+```bash
+cp .env.example .env
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Edit `.env`:
+```
+MONGODB_URI=mongodb://raghavgambhir10135:<YOUR_PASSWORD>@ac-zfe5pim-shard-00-00.tu8fqrh.mongodb.net:27017,...
+JWT_SECRET=your_strong_random_secret_here
+PORT=5000
+CLIENT_URL=http://localhost:3000
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+> ⚠️ Replace `<YOUR_PASSWORD>` in the MongoDB URI with your actual Atlas password.
 
-### `npm test`
+### 3. Start the server
+```bash
+# Development (with auto-reload)
+npm run dev
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# Production
+npm start
+```
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## API Reference
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+All protected routes require header:
+```
+Authorization: Bearer <token>
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+### Auth
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| POST | `/api/auth/register` | No | Register a new user |
+| POST | `/api/auth/login` | No | Login & get token |
+| GET | `/api/auth/me` | Yes | Get current user |
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+**Register body:**
+```json
+{ "name": "Raghav", "email": "you@example.com", "password": "yourpassword" }
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+**Login body:**
+```json
+{ "email": "you@example.com", "password": "yourpassword" }
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+### Profile
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| PUT | `/api/profile` | Yes | Update profile |
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+**Body (all optional):**
+```json
+{
+  "name": "Raghav",
+  "phone": "+91 98765 43210",
+  "age": 18,
+  "course": "Computer Science",
+  "avatar": "<base64 image string>"
+}
+```
 
-### Code Splitting
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Pomodoro
 
-### Analyzing the Bundle Size
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| POST | `/api/pomodoro/complete` | Yes | Log a completed pomodoro (+50 XP) |
+| GET | `/api/pomodoro/history` | Yes | Get last 50 sessions |
+| GET | `/api/pomodoro/stats` | Yes | Get today's stats |
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+**Complete body:**
+```json
+{ "roomType": "study", "durationMinutes": 25 }
+```
 
-### Making a Progressive Web App
+**XP Rules:**
+- Each pomodoro = +50 XP
+- 4 pomodoros in a day = +200 XP bonus
+- Badges auto-awarded: First Focus 🍅, Focus Warrior ⚔️, Mind Master 🧠
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+---
 
-### Advanced Configuration
+### Leaderboard
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| GET | `/api/leaderboard` | No | Top 20 users by XP |
+| GET | `/api/leaderboard/me` | Yes | Your rank |
 
-### Deployment
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### Rooms
 
-### `npm run build` fails to minify
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| POST | `/api/rooms/join` | Yes | Join a room |
+| POST | `/api/rooms/leave` | Yes | Leave a room |
+| GET | `/api/rooms/stats` | No | Active users per room |
+| POST | `/api/rooms/chat` | Yes | Send a chat message |
+| GET | `/api/rooms/:roomType/messages` | Yes | Get recent 30 messages |
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+**Room types:** `study`, `meditate`, `yoga`, `read`, `interact`, `music`
+
+**Join body:**
+```json
+{ "roomType": "study" }
+```
+
+**Chat body:**
+```json
+{ "roomType": "study", "message": "Let's go! 🎯" }
+```
+
+---
+
+## Connecting the Frontend
+
+In your `focushub_updated.html`, replace the `saveProfile()` and other functions to call the API.
+
+Example — save profile:
+```javascript
+async function saveProfile() {
+  const token = localStorage.getItem('fh_token');
+  const data = {
+    name: document.getElementById('pfName').value,
+    email: document.getElementById('pfEmail').value,
+    phone: document.getElementById('pfPhone').value,
+    age: document.getElementById('pfAge').value,
+    course: document.getElementById('pfCourse').value,
+  };
+  const res = await fetch('http://localhost:5000/api/profile', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token
+    },
+    body: JSON.stringify(data)
+  });
+  const result = await res.json();
+  if (result.success) showToast('✅', 'Profile Saved!', 'Your details have been updated.');
+}
+```
+
+Example — complete pomodoro:
+```javascript
+async function pomComplete() {
+  const token = localStorage.getItem('fh_token');
+  const res = await fetch('http://localhost:5000/api/pomodoro/complete', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token
+    },
+    body: JSON.stringify({ roomType: currentRoomType, durationMinutes: 25 })
+  });
+  const result = await res.json();
+  if (result.success) {
+    xp = result.user.xp;
+    updateXP();
+    showToast('🏆', 'Pomodoro Complete!', result.message);
+  }
+}
+```
+
+---
+
+## Project Structure
+```
+focushub-backend/
+├── server.js           # Entry point
+├── .env.example        # Environment template
+├── package.json
+├── config/
+│   └── db.js           # MongoDB Atlas connection
+├── models/
+│   ├── User.js         # User schema (auth + gamification)
+│   ├── PomodoroSession.js
+│   └── ChatMessage.js
+├── routes/
+│   ├── auth.js         # Register, login, me
+│   ├── profile.js      # Update profile
+│   ├── pomodoro.js     # Log sessions, history, stats
+│   ├── leaderboard.js  # Top users
+│   └── rooms.js        # Join/leave rooms, chat
+└── middleware/
+    └── auth.js         # JWT protection middleware
+```

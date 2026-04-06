@@ -1,0 +1,98 @@
+body {
+  font-family: Arial;
+  background: #0d0a1a;
+  color: white;
+  margin: 0;
+}
+
+nav {
+  background: #111;
+  padding: 15px;
+}
+
+.nav-inner {
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav-cta {
+  background: purple;
+  color: white;
+  padding: 8px 15px;
+  text-decoration: none;
+}
+
+.hero {
+  text-align: center;
+  padding: 100px 20px;
+}
+
+.btn-primary {
+  background: purple;
+  padding: 10px 20px;
+  color: white;
+  text-decoration: none;
+}
+
+.stats-row {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.stat-card {
+  background: #222;
+  padding: 20px;
+}
+
+.rooms-grid {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+}
+
+.room-card {
+  background: #222;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.join-btn {
+  display: inline-block;
+  margin-top: 10px;
+  background: purple;
+  padding: 5px 10px;
+  color: white;
+  text-decoration: none;
+}
+
+.active-room {
+  display: flex;
+  flex-direction: column;
+}
+
+.room-body {
+  display: flex;
+}
+
+.room-main {
+  flex: 1;
+  padding: 20px;
+}
+
+.room-sidebar {
+  width: 250px;
+  padding: 20px;
+  background: #111;
+}
+
+.timer-display {
+  font-size: 40px;
+}
+
+.chat-box {
+  height: 150px;
+  overflow-y: auto;
+  background: #222;
+  margin-bottom: 10px;
+}

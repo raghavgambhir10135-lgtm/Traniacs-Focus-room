@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Room</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <h2>FocusHub</h2>
+    <a href="rooms.html">Back</a>
+  </div>
+</nav>
+
+<div class="active-room">
+
+  <div class="room-header">
+    <h2>Deep Work Room</h2>
+  </div>
+
+  <div class="room-body">
+
+    <!-- LEFT -->
+    <div class="room-main">
+
+      <div class="timer-card">
+        <div class="timer-display" id="timer">25:00</div>
+        <div class="timer-controls">
+          <button onclick="startTimer()">Start</button>
+          <button onclick="resetTimer()">Reset</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT -->
+    <div class="room-sidebar">
+
+      <h4>Chat</h4>
+      <div class="chat-box" id="chatBox"></div>
+
+      <div class="chat-input-row">
+        <input id="msg" placeholder="Type message">
+        <button onclick="sendMsg()">Send</button>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script src="../js/script.js"></script>
+
+</body>
+</html>

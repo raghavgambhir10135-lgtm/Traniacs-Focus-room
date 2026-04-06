@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FocusRoom</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Theme Toggle -->
+    <header>
+        <h1>FocusRoom</h1>
+        <button id="themeToggle">Dark / Light / Read Mode</button>
+    </header>
+
+    <!-- Signup / Login -->
+    <section id="auth">
+        <h2>Signup for Free</h2>
+        <form id="signupForm">
+            <input type="text" placeholder="Full Name" name="name" required>
+            <input type="email" placeholder="Email" name="email" required>
+            <input type="password" placeholder="Password" name="password" required>
+            <button type="submit">Register</button>
+        </form>
+
+        <h2>Login</h2>
+        <form id="loginForm">
+            <input type="email" placeholder="Email" name="email" required>
+            <input type="password" placeholder="Password" name="password" required>
+            <button type="submit">Login</button>
+        </form>
+    </section>
+
+    <!-- Profile -->
+    <section id="profile">
+        <h2>My Profile</h2>
+        <form id="profileForm">
+            <input type="file" name="dp" accept="image/*">
+            <input type="text" placeholder="Full Name" name="fullname">
+            <input type="email" placeholder="Email" name="email">
+            <input type="tel" placeholder="Phone Number" name="phone">
+            <input type="number" placeholder="Age" name="age">
+            <input type="text" placeholder="Course / Field of Study" name="course">
+            <button type="submit">Save Profile</button>
+        </form>
+        <div id="xpLevel">
+            <p>XP: <span id="xpValue">0</span></p>
+            <p>Level: <span id="levelValue">Beginner</span></p>
+        </div>
+    </section>
+
+    <!-- Rewards & Streaks -->
+    <section id="rewards">
+        <h2>Rewards</h2>
+        <div id="streakBox">Streak: <span id="streakDays">0</span> days</div>
+        <div id="todayReward">Rewards Unlocked Today: <span id="rewardInfo">None</span></div>
+        <div id="badges">
+            <h3>Badges</h3>
+            <ul>
+                <li>Streak Starter</li>
+                <li>Focus Athlete</li>
+                <li>Mind Master</li>
+                <li>Consistency King</li>
+                <li>Zen Mode</li>
+                <li>Scholar</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Leaderboard -->
+    <section id="leaderboard">
+        <h2>Top Focus Minds</h2>
+        <ul id="leaderboardList">
+            <!-- Filled dynamically -->
+        </ul>
+    </section>
+
+    <!-- Rooms -->
+    <section id="rooms">
+        <h2>Explore Rooms</h2>
+        <div class="room">
+            <h3>Yoga Room</h3>
+            <p>Online: <span>0</span></p>
+            <button>Join</button>
+        </div>
+        <div class="room">
+            <h3>Meditation Room</h3>
+            <p>Online: <span>0</span></p>
+            <button>Join</button>
+        </div>
+        <div class="room">
+            <h3>Study Room</h3>
+            <p>Online: <span>0</span></p>
+            <button>Join</button>
+        </div>
+        <div class="room">
+            <h3>Chat with Stranger</h3>
+            <p>Online: <span>0</span></p>
+            <button>Join</button>
+        </div>
+    </section>
+
+    <!-- Active Users -->
+    <section id="activeUsers">
+        <h2>Active Users</h2>
+        <div id="activeUsersBox">
+            <!-- Filled dynamically -->
+        </div>
+    </section>
+
+    <!-- Chat Box -->
+    <section id="chat">
+        <h2>Chat</h2>
+        <div id="chatWindow"></div>
+        <input type="text" id="chatInput" placeholder="Type a message...">
+        <button id="sendChat">Send</button>
+    </section>
+
+    <script src="app.js"></script>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="js/rooms.js"></script>
+    <script src="js/chat.js"></script>
+    <script src="js/profile.js"></script>
+    <script src="js/rewards.js"></script>
+    <script src="js/leaderboard.js"></script>
+
+
+</body>
+
+</html>
